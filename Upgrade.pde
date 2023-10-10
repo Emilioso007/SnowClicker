@@ -28,4 +28,9 @@ class Upgrade {
     textAlign(LEFT, CENTER);
     text(text + "\nPrice: " + int(price) + "\nSPS: " + extraPerSecond, x+10, y+h/2.0);
   }
+
+  boolean contains(int x_, int y_) {
+
+    return (x_ >= x && x_ <= x+w && y_ >= y && y_ <= y+h);
+  }
 }

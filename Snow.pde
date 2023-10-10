@@ -15,7 +15,7 @@ class Snow {
 
   boolean contains(int x_, int y_) {
 
-    if (dist(x_, y_, x, y)<=w/2.0) {
+    if (dist(x_, y_, x, y)<=(w/2.0)*1.1) {
       return true;
     }
     return false;

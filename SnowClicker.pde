@@ -41,7 +41,14 @@ void draw() {
 void mousePressed() {
 
   if (snow.contains(mouseX, mouseY)) {
-
     score += clickPower;
+  } else {
+
+    if (upgrade1.contains(mouseX, mouseY) && score >= upgrade1.price) {
+
+      score -= upgrade1.price;
+      scorePerSecond += upgrade1.extraPerSecond;
+      upgrade1.price *= upgrade1.priceIncrease;
+    }
   }
 }
