@@ -25,7 +25,7 @@ void setup() {
   textFont(font);
 
   size(800, 560);
-  snow = new Snow(width/2, 2*height/3, 160, 160);
+  snow = new Snow(2*width/3, 2*height/3, 160, 160);
 }
 
 void draw() {
@@ -44,9 +44,9 @@ void draw() {
   textAlign(CENTER, TOP);
 
   textSize(60);
-  text(int(score) + " snowball" + (score!=1?"s":""), width/2, 10);
+  text(int(score) + " snowball" + (int(score)!=1?"s":""), 2*width/3, 30);
   textSize(25);
-  text(int(scorePerSecond) + "." + int((scorePerSecond%1)*100) + " snowballs per second", width/2, 70);
+  text(int(scorePerSecond) + "." + int((scorePerSecond%1)*100) + " snowballs per second", 2*width/3, 100);
 }
 
 void mousePressed() {
