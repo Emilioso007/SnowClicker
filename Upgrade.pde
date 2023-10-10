@@ -30,7 +30,7 @@ class Upgrade {
     textAlign(CENTER,TOP);
     text(text, x+w/2, y+5);
     textAlign(LEFT, CENTER);
-    text("\n$$$:\n$/s:\n###:", x+5, y+h/2.0);
+    text("\n$$$:\n$/s:\nQty:", x+5, y+h/2.0);
     textAlign(RIGHT, CENTER);
     text("\n" + int(price) + "\n" + extraPerSecond + "\n" + amountBought, x+w-5, y+h/2.0);
   }

@@ -14,10 +14,10 @@ void setup() {
   //Upgrade(x, y, w, h, text, sps, price, price_increase)
 
   upgrades[0] = new Upgrade(10, 0*110+10, 170, 100, "Hair Dryer", 1, 10, 1.1);
-  upgrades[1] = new Upgrade(10, 1*110+10, 170, 100, "Fork", 10, 100, 1.1);
-  upgrades[2] = new Upgrade(10, 2*110+10, 170, 100, "Rubber Duck", 100, 1000, 1.1);
-  upgrades[3] = new Upgrade(10, 3*110+10, 170, 100, "Laser Snow Gun", 1000, 10000, 1.1);
-  upgrades[4] = new Upgrade(10, 4*110+10, 170, 100, "Plasma Press", 10000, 100000, 1.1);
+  upgrades[1] = new Upgrade(10, 1*110+10, 170, 100, "Fork", 2, 25, 1.15);
+  upgrades[2] = new Upgrade(10, 2*110+10, 170, 100, "Rubber Duck", 5, 50, 1.2);
+  upgrades[3] = new Upgrade(10, 3*110+10, 170, 100, "Snow Gun", 10, 100, 1.25);
+  upgrades[4] = new Upgrade(10, 4*110+10, 170, 100, "Plasma Press", 20, 200, 1.3);
 
 
   frameRate(56);
