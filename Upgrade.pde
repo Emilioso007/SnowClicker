@@ -21,7 +21,7 @@ class Upgrade {
 
     rectMode(CORNER);
     noStroke();
-    fill(128, 200, 0);
+    fill(128, score>=price?200:0, 0);
     rect(x, y, w, h);
     fill(255);
     textSize(20);

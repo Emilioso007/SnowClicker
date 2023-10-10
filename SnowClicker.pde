@@ -1,5 +1,5 @@
 
-Upgrade upgrade1;
+Upgrade[] upgrades;
 
 Snow snow;
 
@@ -9,13 +9,22 @@ PFont font;
 
 void setup() {
 
-  upgrade1 = new Upgrade(10, 10, 160, 100, "Upgrade1text", 1, 10, 1.1);
+  upgrades = new Upgrade[5];
 
-  frameRate(60);
+  //Upgrade(x, y, w, h, text, sps, price, price_increase)
+
+  upgrades[0] = new Upgrade(10, 10, 160, 100, "Upgrade1text", 1, 10, 1.1);
+  upgrades[1] = new Upgrade(10, 120, 160, 100, "Upgrade2text", 10, 100, 1.1);
+  upgrades[2] = new Upgrade(10, 230, 160, 100, "Upgrade3text", 100, 1000, 1.1);
+  upgrades[3] = new Upgrade(10, 340, 160, 100, "Upgrade4text", 1000, 10000, 1.1);
+  upgrades[4] = new Upgrade(10, 450, 160, 100, "Upgrade5text", 10000, 100000, 1.1);
+
+
+  frameRate(56);
   font = createFont("Source Code Pro Regular", 32);
   textFont(font);
 
-  size(800, 600);
+  size(800, 560);
   snow = new Snow(width/2, 2*height/3, 160, 160);
 }
 
@@ -25,7 +34,9 @@ void draw() {
 
   background(0);
 
-  upgrade1.show();
+  for (Upgrade u : upgrades) {
+    u.show();
+  }
 
   snow.show();
 
@@ -44,11 +55,13 @@ void mousePressed() {
     score += clickPower;
   } else {
 
-    if (upgrade1.contains(mouseX, mouseY) && score >= upgrade1.price) {
+    for (int i = 0; i < upgrades.length; i++) {
+      if (upgrades[i].contains(mouseX, mouseY) && score >= upgrades[i].price) {
 
-      score -= upgrade1.price;
-      scorePerSecond += upgrade1.extraPerSecond;
-      upgrade1.price *= upgrade1.priceIncrease;
+        score -= upgrades[i].price;
+        scorePerSecond += upgrades[i].extraPerSecond;
+        upgrades[i].price *= upgrades[i].priceIncrease;
+      }
     }
   }
 }
