@@ -13,11 +13,11 @@ void setup() {
 
   //Upgrade(x, y, w, h, text, sps, price, price_increase)
 
-  upgrades[0] = new Upgrade(10, 10, 160, 100, "Upgrade1text", 1, 10, 1.1);
-  upgrades[1] = new Upgrade(10, 120, 160, 100, "Upgrade2text", 10, 100, 1.1);
-  upgrades[2] = new Upgrade(10, 230, 160, 100, "Upgrade3text", 100, 1000, 1.1);
-  upgrades[3] = new Upgrade(10, 340, 160, 100, "Upgrade4text", 1000, 10000, 1.1);
-  upgrades[4] = new Upgrade(10, 450, 160, 100, "Upgrade5text", 10000, 100000, 1.1);
+  upgrades[0] = new Upgrade(10, 0*110+10, 160, 100, "Upgrade1text", 1, 10, 1.1);
+  upgrades[1] = new Upgrade(10, 1*110+10, 160, 100, "Upgrade2text", 10, 100, 1.1);
+  upgrades[2] = new Upgrade(10, 2*110+10, 160, 100, "Upgrade3text", 100, 1000, 1.1);
+  upgrades[3] = new Upgrade(10, 3*110+10, 160, 100, "Upgrade4text", 1000, 10000, 1.1);
+  upgrades[4] = new Upgrade(10, 4*110+10, 160, 100, "Upgrade5text", 10000, 100000, 1.1);
 
 
   frameRate(56);
@@ -61,6 +61,7 @@ void mousePressed() {
         score -= upgrades[i].price;
         scorePerSecond += upgrades[i].extraPerSecond;
         upgrades[i].price *= upgrades[i].priceIncrease;
+        upgrades[i].amountBought++;
       }
     }
   }
