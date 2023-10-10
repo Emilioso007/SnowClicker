@@ -4,7 +4,7 @@ class Upgrade {
   String text;
   float extraPerSecond;
   float price, priceIncrease;
-  
+
   int amountBought = 0;
 
   Upgrade(int x_, int y_, int w_, int h_, String text_, float extraPerSecond_, float price_, float priceIncrease_) {
@@ -27,8 +27,12 @@ class Upgrade {
     rect(x, y, w, h);
     fill(255);
     textSize(20);
+    textAlign(CENTER,TOP);
+    text(text, x+w/2, y+5);
     textAlign(LEFT, CENTER);
-    text(text + "\nPrice: " + int(price) + "\nSPS: " + extraPerSecond + "\nAmount: " + amountBought, x+5, y+h/2.0);
+    text("\n$$$:\n$/s:\n###:", x+5, y+h/2.0);
+    textAlign(RIGHT, CENTER);
+    text("\n" + int(price) + "\n" + extraPerSecond + "\n" + amountBought, x+w-5, y+h/2.0);
   }
 
   boolean contains(int x_, int y_) {
