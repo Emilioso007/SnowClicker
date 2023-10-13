@@ -1,4 +1,6 @@
 import processing.sound.*;
+import java.text.NumberFormat;
+import java.util.*;
 
 SoundFile clickSound, buySound;
 
@@ -8,14 +10,22 @@ Snow snow;
 
 float score = 0, scorePerSecond = 0, clickPower = 1;
 
+ClickUpgrade clickUpgrade;
+
 PFont font;
 
+NumberFormat fmt;
+
 void setup() {
+
+  fmt = NumberFormat.getCompactNumberInstance(Locale.US, NumberFormat.Style.SHORT);
   
   clickSound = new SoundFile(this, "snow.mp3");
   buySound = new SoundFile(this, "buy.wav");
 
-  upgrades = new Upgrade[5];  
+  upgrades = new Upgrade[5];
+  
+  clickUpgrade = new ClickUpgrade(width-40,height/2-80,20,160,20,25);
 
   //Upgrade(x, y, w, h, text, sps, price, price_increase)
 
@@ -24,7 +34,6 @@ void setup() {
   upgrades[2] = new Upgrade(10, 2*110+10, 170, 100, "Rubber Duck", 5, 50, 1.2);
   upgrades[3] = new Upgrade(10, 3*110+10, 170, 100, "Snow Gun", 10, 100, 1.25);
   upgrades[4] = new Upgrade(10, 4*110+10, 170, 100, "Plasma Press", 20, 200, 1.3);
-
 
   frameRate(56);
   font = createFont("Source Code Pro Regular", 32);
@@ -45,12 +54,15 @@ void draw() {
   }
 
   snow.show();
+  
+  clickUpgrade.update();
+  clickUpgrade.show();
 
   fill(255);
   textAlign(CENTER, TOP);
-
+  
   textSize(60);
-  text(int(score) + " snowball" + (int(score)!=1?"s":""), 5*width/8, 30);
+  text(fmt.format(int(score)) + " snowball" + (int(score)!=1?"s":""), 5*width/8, 30);
   textSize(25);
   text(int(scorePerSecond) + "." + int((scorePerSecond%1)*100) + " snowballs per second", 5*width/8, 100);
 }
@@ -59,6 +71,7 @@ void mousePressed() {
 
   if (snow.contains(mouseX, mouseY)) {
     score += clickPower;
+    clickUpgrade.clickCount++;
     clickSound.play();
   } else {
 
