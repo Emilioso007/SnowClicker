@@ -1,3 +1,6 @@
+import processing.sound.*;
+
+SoundFile clickSound, buySound;
 
 Upgrade[] upgrades;
 
@@ -8,8 +11,11 @@ float score = 0, scorePerSecond = 0, clickPower = 1;
 PFont font;
 
 void setup() {
+  
+  clickSound = new SoundFile(this, "snow.mp3");
+  buySound = new SoundFile(this, "buy.wav");
 
-  upgrades = new Upgrade[5];
+  upgrades = new Upgrade[5];  
 
   //Upgrade(x, y, w, h, text, sps, price, price_increase)
 
@@ -25,7 +31,7 @@ void setup() {
   textFont(font);
 
   size(800, 560);
-  snow = new Snow(2*width/3, 2*height/3, 160, 160);
+  snow = new Snow(5*width/8, 2*height/3, 160, 160);
 }
 
 void draw() {
@@ -44,24 +50,25 @@ void draw() {
   textAlign(CENTER, TOP);
 
   textSize(60);
-  text(int(score) + " snowball" + (int(score)!=1?"s":""), 2*width/3, 30);
+  text(int(score) + " snowball" + (int(score)!=1?"s":""), 5*width/8, 30);
   textSize(25);
-  text(int(scorePerSecond) + "." + int((scorePerSecond%1)*100) + " snowballs per second", 2*width/3, 100);
+  text(int(scorePerSecond) + "." + int((scorePerSecond%1)*100) + " snowballs per second", 5*width/8, 100);
 }
 
 void mousePressed() {
 
   if (snow.contains(mouseX, mouseY)) {
     score += clickPower;
+    clickSound.play();
   } else {
 
     for (int i = 0; i < upgrades.length; i++) {
       if (upgrades[i].contains(mouseX, mouseY) && score >= upgrades[i].price) {
-
         score -= upgrades[i].price;
         scorePerSecond += upgrades[i].extraPerSecond;
         upgrades[i].price *= upgrades[i].priceIncrease;
         upgrades[i].amountBought++;
+        buySound.play();
       }
     }
   }
