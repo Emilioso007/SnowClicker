@@ -2,13 +2,15 @@ import processing.sound.*;
 import java.text.NumberFormat;
 import java.util.*;
 
-SoundFile clickSound, buySound;
+SoundFile clickSound, buySound, ascendSound;
 
 Upgrade[] upgrades;
 
 Snow snow;
 
-float score = 0, scorePerSecond = 0, clickPower = 1;
+float score, scorePerSecond, clickPower;
+
+float globalMult = 1;
 
 ClickUpgrade clickUpgrade;
 
@@ -24,16 +26,21 @@ NumberFormat fmt;
 void setup() {
   size(800, 560);
 
+  score = 0;
+  scorePerSecond = 0;
+  clickPower = 100;
+
   upgradePanel = createGraphics((int)(width*0.225), height);
 
   fmt = NumberFormat.getCompactNumberInstance(Locale.US, NumberFormat.Style.SHORT);
 
   clickSound = new SoundFile(this, "snow.mp3");
   buySound = new SoundFile(this, "buy.wav");
+  ascendSound = new SoundFile(this, "ascend.wav");
 
   clickUpgrade = new ClickUpgrade(width-40, height/2-80, 20, 160, 20, 1.3);
 
-  ascendUpgrade = new AscendUpgrade();
+  ascendUpgrade = new AscendUpgrade((int)(width*0.225), height-170, 200, 160);
 
   upgrades = new Upgrade[5];
 
@@ -43,6 +50,10 @@ void setup() {
   float[] upgrade_sps = {1, 2, 5, 10, 20};
   float[] upgrade_price = {10, 25, 50, 100, 200};
   float[] upgrade_price_increase = {1.1, 1.15, 1.2, 1.25, 1.3};
+
+  for (int i = 0; i < upgrade_sps.length; i++) {
+    upgrade_sps[i] *= globalMult;
+  }
 
   for (int i = 0; i < upgrades.length; i++) {
     upgrades[i] = new Upgrade(
@@ -93,6 +104,8 @@ void draw() {
   clickUpgrade.update();
   clickUpgrade.show();
 
+  if (upgrades[upgrades.length-1].amountBought!=0)ascendUpgrade.show();
+
   fill(255);
   textAlign(CENTER, TOP);
 
@@ -105,6 +118,12 @@ void draw() {
   textAlign(RIGHT, TOP);
   String fps = String.format(Locale.US, "%.2f", frameRate);
   text("FPS: " + fps, width-1, 0+1);
+
+  if (globalMult > 1) {
+    textSize(20);
+    textAlign(RIGHT, BOTTOM);
+    text("Current permanent multiplier: " + (int)globalMult, width-10, height-10);
+  }
 }
 
 void mousePressed() {
@@ -127,4 +146,15 @@ void mousePressed() {
       }
     }
   }
+  if (ascendUpgrade.contains(mouseX, mouseY) && upgrades[upgrades.length-1].amountBought>=10) {
+    globalMult *= 2;
+    ascendSound.stop();
+    ascendSound.play();
+    reset();
+  }
+}
+
+void reset() {
+
+  frameCount = -1;
 }
