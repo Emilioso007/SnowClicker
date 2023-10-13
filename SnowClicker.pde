@@ -28,7 +28,7 @@ void setup() {
 
   score = 0;
   scorePerSecond = 0;
-  clickPower = 100;
+  clickPower = 1*globalMult;
 
   upgradePanel = createGraphics((int)(width*0.225), height);
 
@@ -112,7 +112,7 @@ void draw() {
   textSize(60);
   text(fmt.format(int(score)) + " snowball" + (int(score)!=1?"s":""), 5*width/8, 30);
   textSize(25);
-  text(int(scorePerSecond) + "." + int((scorePerSecond%1)*100) + " snowballs per second", 5*width/8, 100);
+  text(fmt.format(scorePerSecond) + " snowball" + (scorePerSecond!=1?"s":"") + " per second", 5*width/8, 100);
 
   textSize(12);
   textAlign(RIGHT, TOP);
