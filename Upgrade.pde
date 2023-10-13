@@ -27,7 +27,7 @@ class Upgrade {
     rect(x, y, w, h);
     fill(255);
     textSize(20);
-    textAlign(CENTER,TOP);
+    textAlign(CENTER, TOP);
     text(text, x+w/2, y+5);
     textAlign(LEFT, CENTER);
     text("\n$$$:\n$/s:\nQty:", x+5, y+h/2.0);
