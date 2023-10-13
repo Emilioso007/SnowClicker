@@ -26,13 +26,19 @@ class ClickUpgrade {
 
     rectMode(CORNER);
     fill(80);
+    noStroke();
     rect(x, y, w, h);
     fill(78, 175, 58);
-    int value = (int)map(clickCount, 0, target, 0, h);
+    int value = (int)map(clickCount, 0, target-1, 0, h);
     rect(x, y+(h-value), w, value);
 
-    textAlign(RIGHT, TOP);
+    pushMatrix();
+    translate(x+w/2, y+h/2);
+    rotate(PI/2.0);
+    fill(255);
+    textAlign(CENTER, CENTER);
     textSize(16);
-    text("Clickpower:\n" + int(clickPower*100)/100.0, x+w, y+h+10);
+    text("Clickpower: " + int(clickPower*100)/100.0, 0, 0);
+    popMatrix();
   }
 }

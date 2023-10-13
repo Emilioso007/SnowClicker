@@ -1,42 +1,42 @@
-class Upgrade {
+class Upgrade extends AABB {
 
-  int x, y, w, h;
   String text;
   float extraPerSecond;
   float price, priceIncrease;
 
   int amountBought = 0;
 
-  Upgrade(int x_, int y_, int w_, int h_, String text_, float extraPerSecond_, float price_, float priceIncrease_) {
+  PGraphics world;
 
-    x = x_;
-    y = y_;
-    w = w_;
-    h = h_;
+  Upgrade(int x_, int y_, int w_, int h_, String text_, float extraPerSecond_, float price_, float priceIncrease_, PGraphics world_, PVector worldTrans_) {
+    super(x_-w_/2, y_-h_/2, w_, h_, (int)worldTrans_.x, (int)worldTrans_.y);
     text = text_;
     extraPerSecond = extraPerSecond_;
     price = price_;
     priceIncrease = priceIncrease_;
+    world = world_;
   }
 
   void show() {
+    world.beginDraw();
 
-    rectMode(CORNER);
-    noStroke();
-    fill(128, score>=price?200:0, 0);
-    rect(x, y, w, h);
-    fill(255);
-    textSize(20);
-    textAlign(CENTER, TOP);
-    text(text, x+w/2, y+5);
-    textAlign(LEFT, CENTER);
-    text("\n$$$:\n$/s:\nQty:", x+5, y+h/2.0);
-    textAlign(RIGHT, CENTER);
-    text("\n" + int(price) + "\n" + extraPerSecond + "\n" + amountBought, x+w-5, y+h/2.0);
-  }
+    world.rectMode(CENTER);
+    world.stroke(0);
+    world.strokeWeight(min(w, h)*0.1);
+    world.fill(128, score>=price?200:0, 0);
+    world.rect(x+w/2, y+h/2, w, h);
 
-  boolean contains(int x_, int y_) {
+    world.fill(255);
+    world.textSize(20);
+    world.textAlign(CENTER, TOP);
+    world.text(text, x+w/2, y+h*0.1);
 
-    return (x_ >= x && x_ <= x+w && y_ >= y && y_ <= y+h);
+    world.textAlign(LEFT, CENTER);
+    world.text("\n$$$:\n$/s:\nQty:", x+w*0.05, y+h/2);
+
+    world.textAlign(RIGHT, CENTER);
+    world.text("\n" + int(price) + "\n" + extraPerSecond + "\n" + amountBought, x+w-w*0.05, y+h/2);
+
+    world.endDraw();
   }
 }

@@ -12,34 +12,67 @@ float score = 0, scorePerSecond = 0, clickPower = 1;
 
 ClickUpgrade clickUpgrade;
 
+AscendUpgrade ascendUpgrade;
+
 PFont font;
+
+PGraphics upgradePanel;
+final PVector upgradePanelPos = new PVector(0, 0);
 
 NumberFormat fmt;
 
 void setup() {
+  size(800, 560);
+
+  upgradePanel = createGraphics((int)(width*0.225), height);
 
   fmt = NumberFormat.getCompactNumberInstance(Locale.US, NumberFormat.Style.SHORT);
 
   clickSound = new SoundFile(this, "snow.mp3");
   buySound = new SoundFile(this, "buy.wav");
 
-  upgrades = new Upgrade[5];
-
   clickUpgrade = new ClickUpgrade(width-40, height/2-80, 20, 160, 20, 1.3);
+
+  ascendUpgrade = new AscendUpgrade();
+
+  upgrades = new Upgrade[5];
 
   //Upgrade(x, y, w, h, text, sps, price, price_increase)
 
-  upgrades[0] = new Upgrade(10, 0*110+10, 170, 100, "Hair Dryer", 1, 10, 1.1);
-  upgrades[1] = new Upgrade(10, 1*110+10, 170, 100, "Fork", 2, 25, 1.15);
-  upgrades[2] = new Upgrade(10, 2*110+10, 170, 100, "Rubber Duck", 5, 50, 1.2);
-  upgrades[3] = new Upgrade(10, 3*110+10, 170, 100, "Snow Gun", 10, 100, 1.25);
-  upgrades[4] = new Upgrade(10, 4*110+10, 170, 100, "Plasma Press", 20, 200, 1.3);
+  String[] upgrade_title = {"Hair Dryer", "Fork", "Rubber Duck", "Snow Gun", "Plasma Press"};
+  float[] upgrade_sps = {1, 2, 5, 10, 20};
+  float[] upgrade_price = {10, 25, 50, 100, 200};
+  float[] upgrade_price_increase = {1.1, 1.15, 1.2, 1.25, 1.3};
+
+  for (int i = 0; i < upgrades.length; i++) {
+    upgrades[i] = new Upgrade(
+      //x
+      upgradePanel.width/2,
+      //y
+      (int)((upgradePanel.height/upgrades.length)/2+(upgradePanel.height/upgrades.length)*i),
+      //w
+      upgradePanel.width,
+      //h
+      (int)(upgradePanel.height/upgrades.length),
+      //title
+      upgrade_title[i],
+      //snowballs per second
+      upgrade_sps[i],
+      //price
+      upgrade_price[i],
+      //price increase multiplier
+      upgrade_price_increase[i],
+      //graphic element
+      upgradePanel,
+      //graphic position
+      upgradePanelPos
+      );
+  }
 
   frameRate(60);
   font = createFont("Source Code Pro Regular", 32);
   textFont(font);
 
-  size(800, 560);
   snow = new Snow(5*width/8, 2*height/3, 160, 160);
 }
 
@@ -52,6 +85,8 @@ void draw() {
   for (Upgrade u : upgrades) {
     u.show();
   }
+  imageMode(CORNER);
+  image(upgradePanel, upgradePanelPos.x, upgradePanelPos.y);
 
   snow.show();
 
@@ -68,7 +103,7 @@ void draw() {
 
   textSize(12);
   textAlign(RIGHT, TOP);
-  String fps = String.format(Locale.US,"%.2f", frameRate);
+  String fps = String.format(Locale.US, "%.2f", frameRate);
   text("FPS: " + fps, width-1, 0+1);
 }
 
